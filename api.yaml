@@ -1,1 +1,10 @@
 openapi: "3.0.0"
+info:
+  title: "Intranet Bookshelf API"
+  description: "REST API communication between the front-end (React) to back-end (Undetermine)."
+  contact:
+    name: "J. Trpka"
+    url: "https://www.github.com/jtrpka0912"
+    email: "jtrpka0912@gmail.com"
+  version: "1.0.0"
+
