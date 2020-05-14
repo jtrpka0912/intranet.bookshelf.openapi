@@ -8,7 +8,7 @@ info:
     email: "jtrpka0912@gmail.com"
   version: "1.0.0"
 servers:
-  - url: "http://localhost:3000/api/v1"
+  - url: "http://localhost:3001/api/v1"
     description: "Development Server"
 components:
   schemas:
@@ -43,3 +43,14 @@ components:
         - type
         - name
         - path
+  examples:
+    File:
+      summary: eBook Book Example
+      description: A simple example of an ebook Book example.
+      value:
+        id: 1
+        type: book
+        name: Journey to the West
+        path: /path/to/ebook/journey-to-the-west.pdf
+        cover: /path/to/ebook/cover/journey-to-the-west.jpg
+        didRead: false
