@@ -10,3 +10,36 @@ info:
 servers:
   - url: "http://localhost:3000/api/v1"
     description: "Development Server"
+components:
+  schemas:
+    File:
+      type: object
+      description: Data representing an ebook inside the bookshelf.
+      properties:
+        id:
+          type: integer
+          description: The primary key.
+        type:
+          type: string
+          description: Is this a book, magazine, or comic book?
+          enum:
+          - book
+          - magazine
+          - comicbook
+        name:
+          type: string
+          description: Name of the ebook.
+        path:
+          type: string
+          description: Path to the ebook in the NAS.
+        cover:
+          type: string
+          description: Path to the image, created in backend, of the ebook.
+        didRead:
+          type: boolean
+          description: Did the user read the ebook.
+      required:
+        - id
+        - type
+        - name
+        - path
