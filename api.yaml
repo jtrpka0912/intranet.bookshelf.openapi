@@ -19,6 +19,7 @@ components:
         id:
           type: integer
           description: The primary key.
+          minimum: 1
         type:
           type: string
           description: Is this a book, magazine, or comic book?
@@ -43,6 +44,22 @@ components:
         - type
         - name
         - path
+    Book:
+      allOf:
+      - $ref: '#/components/schemas/File'
+      - type: object
+        properties:
+          author:
+            type: string
+            description: The author of the ebook book.
+    Magazine:
+      allOf:
+        - $ref: '#/components/schemas/File'
+        - type: object
+          properties:
+            issue:
+              type: integer
+              description: The issue number of the ebook magazine.
   examples:
     File:
       summary: eBook Book Example
