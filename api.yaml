@@ -34,6 +34,15 @@ components:
         cover: /path/to/images/cover/magpi-issue014.jpg
         didRead: false
         issue: 14
+    Shelf:
+      summary: Bookshelf Example
+      description: An example of a simple bookshelf.
+      value:
+        id: 2
+        name: Bookshelf of Books
+        root: /path/to/root
+        showDirectories: true
+        multiFile: false
   schemas:
     Book:
       allOf:
@@ -99,6 +108,10 @@ components:
         path:
           type: string
           description: Path to the directory in the NAS.
+      required:
+        - id
+        - name
+        - path
     Folders:
       type: array
       description: An array of directories.
@@ -115,4 +128,31 @@ components:
             issue:
               type: integer
               description: The issue number of the ebook magazine.
-  
+    Shelf:
+      type: object
+      description: A single collection of ebooks from a root directory.
+      example:
+        $ref: '#/components/example/Shelf'
+      properties:
+        id:
+          type: integer
+          description: The primary key.
+          minimum: 1
+        name:
+          type: string
+          description: Name of the shelf or collection.
+        root:
+          type: string
+          description: The starting path of the collection.
+        showDirectories:
+          type: boolean
+          description: Allow the explorer to show all files (false) at once or separated in their respective directories (true).
+          default: true
+        multiFile:
+          type: boolean
+          description: Allow a single ebook to be a directory with multiple file types inside.
+          default: false
+      required:
+        - id
+        - name
+        - root
