@@ -12,9 +12,22 @@ servers:
     description: "Development Server"
 components:
   schemas:
+    Book:
+      allOf:
+      - $ref: '#/components/schemas/File'
+      - description: Data representing an ebook Book inside the bookshelf.
+      - example: 
+        $ref: '#/components/examples/Book'
+      - type: object
+        properties:
+          author:
+            type: string
+            description: The author of the ebook book.
     File:
       type: object
       description: Data representing an ebook inside the bookshelf.
+      example:
+        $ref: '#/components/examples/File'
       properties:
         id:
           type: integer
@@ -44,30 +57,51 @@ components:
         - type
         - name
         - path
-    Book:
-      allOf:
-      - $ref: '#/components/schemas/File'
-      - type: object
-        properties:
-          author:
-            type: string
-            description: The author of the ebook book.
+    Folder:
+      type: object
+      description: Data representing a directory inside the bookshelf.
+      properties:
+        id:
+          type: integer
+          description: The primary key.
+          minimum: 1
+        name:
+          type: string
+          description: Name of the directory; for example, a publisher or genre name.
+        path:
+          type: string
+          description: Path to the directory in the NAS.
     Magazine:
       allOf:
         - $ref: '#/components/schemas/File'
+        - description: Data representing an ebook Magazine inside the bookshelf.
+        - example: 
+          $ref: '#/components/examples/Book'
         - type: object
           properties:
             issue:
               type: integer
               description: The issue number of the ebook magazine.
   examples:
-    File:
+    Book:
       summary: eBook Book Example
       description: A simple example of an ebook Book example.
       value:
-        id: 1
+        id: 4
         type: book
         name: Journey to the West
         path: /path/to/ebook/journey-to-the-west.pdf
-        cover: /path/to/ebook/cover/journey-to-the-west.jpg
+        cover: /path/to/images/cover/journey-to-the-west.jpg
         didRead: false
+        author: Unknown
+    Magazine:
+      summary: eBook Magazine Example
+      description: A simple example of an ebook Magazine example.
+      value:
+        id: 19
+        type: magazine
+        name: Magpi
+        path: /path/to/magazines/magpi/issue014.pdf
+        cover: /path/to/images/cover/magpi-issue014.jpg
+        didRead: false
+        issue: 14
