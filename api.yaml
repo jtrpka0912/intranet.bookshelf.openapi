@@ -1,7 +1,7 @@
 openapi: "3.0.0"
 info:
   title: "Intranet Bookshelf API"
-  description: "REST API communication between the front-end (React) to back-end (Undetermine)."
+  description: "REST API communication between the front-end (React) to back-end (NodeJS)."
   contact:
     name: "J. Trpka"
     url: "https://www.github.com/jtrpka0912"
@@ -11,14 +11,37 @@ servers:
   - url: "http://localhost:3001/api/v1"
     description: "Development Server"
 components:
+  examples:
+    Book:
+      summary: eBook Book Example
+      description: A simple example of an ebook Book example.
+      value:
+        id: 4
+        type: book
+        name: Journey to the West
+        path: /path/to/ebook/journey-to-the-west.pdf
+        cover: /path/to/images/cover/journey-to-the-west.jpg
+        didRead: false
+        author: Unknown
+    Magazine:
+      summary: eBook Magazine Example
+      description: A simple example of an ebook Magazine example.
+      value:
+        id: 19
+        type: magazine
+        name: Magpi
+        path: /path/to/magazines/magpi/issue014.pdf
+        cover: /path/to/images/cover/magpi-issue014.jpg
+        didRead: false
+        issue: 14
   schemas:
     Book:
       allOf:
       - $ref: '#/components/schemas/File'
       - description: Data representing an ebook Book inside the bookshelf.
-      - example: 
-        $ref: '#/components/examples/Book'
       - type: object
+        example: 
+          $ref: '#/components/examples/Book'
         properties:
           author:
             type: string
@@ -57,6 +80,11 @@ components:
         - type
         - name
         - path
+    Files:
+      type: array
+      description: An array of ebook files.
+      items:
+        $ref: '#/components/schemas/File'
     Folder:
       type: object
       description: Data representing a directory inside the bookshelf.
@@ -71,37 +99,20 @@ components:
         path:
           type: string
           description: Path to the directory in the NAS.
+    Folders:
+      type: array
+      description: An array of directories.
+      items:
+        $ref: '#/components/schemas/Folder'
     Magazine:
       allOf:
         - $ref: '#/components/schemas/File'
         - description: Data representing an ebook Magazine inside the bookshelf.
-        - example: 
-          $ref: '#/components/examples/Book'
         - type: object
+          example: 
+            $ref: '#/components/examples/Book'
           properties:
             issue:
               type: integer
               description: The issue number of the ebook magazine.
-  examples:
-    Book:
-      summary: eBook Book Example
-      description: A simple example of an ebook Book example.
-      value:
-        id: 4
-        type: book
-        name: Journey to the West
-        path: /path/to/ebook/journey-to-the-west.pdf
-        cover: /path/to/images/cover/journey-to-the-west.jpg
-        didRead: false
-        author: Unknown
-    Magazine:
-      summary: eBook Magazine Example
-      description: A simple example of an ebook Magazine example.
-      value:
-        id: 19
-        type: magazine
-        name: Magpi
-        path: /path/to/magazines/magpi/issue014.pdf
-        cover: /path/to/images/cover/magpi-issue014.jpg
-        didRead: false
-        issue: 14
+  
