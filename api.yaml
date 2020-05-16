@@ -1,7 +1,7 @@
 openapi: "3.0.0"
 info:
   title: "Intranet Bookshelf API"
-  description: "REST API communication between the front-end (React) to back-end (NodeJS)."
+  description: "REST API communication between the front-end (React) and the back-end (NodeJS)."
   contact:
     name: "J. Trpka"
     url: "https://www.github.com/jtrpka0912"
@@ -60,6 +60,18 @@ components:
         root: /path/to/root
         showDirectories: true
         multiFile: false
+  parameters:
+    ShelfID:
+      name: shelfId
+      in: path
+      description: Primary key for a shelf.
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      example:
+        value: 3
+      style: simple
   requestBodies:
     CreateShelf:
       description: The fields needed to create a bookshelf.
@@ -222,18 +234,18 @@ components:
         $ref: '#/components/schemas/Shelf'
 paths:
   /shelves:
-    summary: Shelf CRUD Endpoints
-    description: Endpoints to create, read, update, and delete shelves.
+    summary: Shelves Endpoints
+    description: An endpoint to interact with multiple shelves or create a new shelf.
     get:
       tags: 
-      - shelf
       - read
+      - shelf
       summary: Get all bookshelves.
       description: Retrieve all bookshelves that will allow the user to select and navigate.
       operationId: retrieve-shelves
       responses:
         '200':
-          description: Retrieve a list of bookshelves.
+          description: Retrieved a list of bookshelves.
           content:
             'application/json':
               schema:
@@ -254,6 +266,27 @@ paths:
             'application/json': {}
         '400':
           $ref: '#/components/responses/400'
+  /shelves/{shelfId}:
+    summary: Single Shelf Endpoints
+    description: An endpoint to interact with a single shelve.
+    parameters:
+      - $ref: '#/components/parameters/ShelfID'
+    get:
+      tags:
+      - read
+      - shelf
+      summary: Get single bookshelf.
+      description: Get a single bookshelf that will retrieve the rules for the collection of ebooks.
+      operationId: retrieve-shelf
+      responses:
+        '200':
+          description: Retrieved a single bookshelf.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Shelf'
+        '404':
+          $ref: '#/components/responses/404'
 tags:
 - name: create
   description: Create operations
