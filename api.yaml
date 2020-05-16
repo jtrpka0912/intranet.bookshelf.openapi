@@ -23,6 +23,16 @@ components:
         cover: /path/to/images/cover/journey-to-the-west.jpg
         didRead: false
         author: Unknown
+    File:
+      summary: eBook Example
+      description: A simple example of an ebook example.
+      value:
+        id: 1
+        type: comicbook
+        name: The Boys
+        path: /path/to/ebook/the-boys/issues/001.cbz
+        cover: /path/to/images/cover/the-boys/issues/001.cbz
+        didRead: false
     Magazine:
       summary: eBook Magazine Example
       description: A simple example of an ebook Magazine example.
@@ -132,7 +142,7 @@ components:
       type: object
       description: A single collection of ebooks from a root directory.
       example:
-        $ref: '#/components/example/Shelf'
+        $ref: '#/components/examples/Shelf'
       properties:
         id:
           type: integer
@@ -156,3 +166,30 @@ components:
         - id
         - name
         - root
+    Shelves:
+      type: array
+      description: An array of collections of ebooks.
+      items:
+        $ref: '#/components/schemas/Shelf'
+paths:
+  /shelves:
+    summary: Shelf CRUD Endpoints
+    description: Endpoints to create, read, update, and delete shelves.
+    get:
+      tags: 
+      - shelf
+      summary: Get all bookshelves.
+      description: Retrieve all bookshelves that will allow the user to select and navigate.
+      operationId: get-shelves
+      responses:
+        '200':
+          description: 'Retrieve a list of bookshelves.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shelves'
+        
+
+tags:
+- name: shelf
+  description: Bookshelf tag
