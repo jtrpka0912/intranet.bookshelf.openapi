@@ -77,11 +77,20 @@ components:
       description: The fields needed to create a bookshelf.
       required: true
       content:
-        application/json:
+        'application/json':
           schema:
             $ref: '#/components/schemas/Shelf'
           example:
             $ref: '#/components/examples/Shelf'
+    UpdateShelf:
+      description: The fields to update a bookshelf.
+      required: true
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/Shelf'
+          example:
+            $ref: '#/components/schemas/Shelf'
   responses:
     '400':
       description: 400 Error - Bad Request
@@ -240,7 +249,7 @@ paths:
       tags: 
       - read
       - shelf
-      summary: Get all bookshelves.
+      summary: Retrieve all bookshelves.
       description: Retrieve all bookshelves that will allow the user to select and navigate.
       operationId: retrieve-shelves
       responses:
@@ -275,8 +284,8 @@ paths:
       tags:
       - read
       - shelf
-      summary: Get single bookshelf.
-      description: Get a single bookshelf that will retrieve the rules for the collection of ebooks.
+      summary: Retrieve single bookshelf.
+      description: Retrieve a single bookshelf that will retrieve the rules for the collection of ebooks.
       operationId: retrieve-shelf
       responses:
         '200':
@@ -287,10 +296,46 @@ paths:
                 $ref: '#/components/schemas/Shelf'
         '404':
           $ref: '#/components/responses/404'
+    put:
+      tags:
+      - shelf
+      - update
+      summary: Edit single bookshelf.
+      description: Edit a single bookshelf by changing its name and rules.
+      operationId: edit-shelf
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateShelf'
+      responses:
+        '200':
+          description: Edited an existing bookshelf.
+          content:
+            'application/json': {}
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      tags:
+      - delete
+      - shelf
+      summary: Remove single bookshelf.
+      description: Remove a single bookshelf.
+      operationId: remove-shelf
+      responses:
+        '200':
+          description: Removed a single bookshelf.
+          content:
+            'application/json': {}
+        '404':
+          $ref: '#/components/responses/404'
 tags:
 - name: create
   description: Create operations
+- name: delete
+  description: Delete operations
 - name: read
   description: Read operations
 - name: shelf
   description: Bookshelf operations
+- name: update
+  description: Update operations
