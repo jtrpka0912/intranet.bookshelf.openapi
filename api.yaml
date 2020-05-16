@@ -333,6 +333,8 @@ tags:
   description: Create operations
 - name: delete
   description: Delete operations
+- name: ebook
+  description: eBook operations
 - name: read
   description: Read operations
 - name: shelf
