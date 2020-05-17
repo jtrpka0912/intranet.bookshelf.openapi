@@ -87,7 +87,18 @@ components:
         type: integer
         minimum: 1
       example:
-        value: 3
+        value: 1
+      style: simple
+    FolderID:
+      name: folderId
+      in: path
+      description: Primary key of a folder.
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      example:
+        value: 1
       style: simple
   requestBodies:
     CreateShelf:
@@ -285,7 +296,7 @@ components:
       items:
         $ref: '#/components/schemas/Shelf'
 paths:
-  /ebooks/{shelfId}:
+  /ebooks/shelf/{shelfId}:
     summary: Base shelf directory
     description: An endpoint to interact with the base directory of the shelf.
     parameters:
@@ -297,6 +308,24 @@ paths:
       summary: Retrieve base directory of a shelf.
       description: Retrieve all files and folders, at the base directory, of a shelf.
       operationId: retrieve-ebooks-base
+      responses:
+        '200':
+          $ref: '#/components/responses/Ebooks'
+        '404':
+          $ref: '#/components/responses/404'
+  /ebooks/shelf/{shelfId}/folder/{folderId}:
+    summary: Shelf directory
+    description: An endpoint to interact with folders, beyond the base directory, of a shelf.
+    parameters:
+      - $ref: '#/components/parameters/ShelfID'
+      - $ref: '#/components/parameters/FolderID'
+    get:
+      tags:
+      - ebook
+      - read
+      summary: Retrieve items in a folder.
+      description: Traverse inside a folder, and retrieve files (ebooks) and folders.
+      operationId: retrieve-ebooks-folder
       responses:
         '200':
           $ref: '#/components/responses/Ebooks'
