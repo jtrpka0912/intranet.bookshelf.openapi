@@ -23,6 +23,16 @@ components:
         cover: /path/to/images/cover/journey-to-the-west.jpg
         didRead: false
         author: Unknown
+    EbooksResponse:
+      summary: eBooks Response Example
+      description: A simple example of an eBook response.
+      value:
+        breadcrumbs:
+        - $ref: '#/components/examples/Folder'
+        directories:
+        - $ref: '#/components/examples/Folder'
+        files:
+        - $ref: '#/components/examples/File'
     Error:
       summary: Error example
       description: A simple error example of the 404 errors.
@@ -40,6 +50,13 @@ components:
         path: /path/to/ebook/the-boys/issues/001.cbz
         cover: /path/to/images/cover/the-boys/issues/001.cbz
         didRead: false
+    Folder:
+      summary: Folder Example
+      description: A simple example of a directory in a shelf.
+      value:
+        id: 5
+        name: O Reilly
+        path: /path/to/books/oreilly
     Magazine:
       summary: eBook Magazine Example
       description: A simple example of an ebook Magazine example.
@@ -70,7 +87,18 @@ components:
         type: integer
         minimum: 1
       example:
-        value: 3
+        value: 1
+      style: simple
+    FolderID:
+      name: folderId
+      in: path
+      description: Primary key of a folder.
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      example:
+        value: 1
       style: simple
   requestBodies:
     CreateShelf:
@@ -92,6 +120,12 @@ components:
           example:
             $ref: '#/components/schemas/Shelf'
   responses:
+    Ebooks:
+      description: A typical response from retrieving files and folders from a shelf.
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/EbooksResponse'
     '400':
       description: 400 Error - Bad Request
       content:
@@ -116,6 +150,24 @@ components:
           author:
             type: string
             description: The author of the ebook book.
+    EbooksResponse:
+      type: object
+      description: Response model with ebooks and directories.
+      example:
+        $ref: '#/components/examples/EbooksResponse'
+      properties:
+        breadcrumbs:
+          description: All of the previous directories that led to this directory.
+          allOf:
+          - $ref: '#/components/schemas/Folders'
+        directories:
+          description: All of the directories inside the directory.
+          allOf:
+          - $ref: '#/components/schemas/Folders'
+        files:
+          description: All of the files inside the directory.
+          allOf:
+          - $ref: '#/components/schemas/Files'  
     Error:
       type: object
       description: Base error object for other errors.
@@ -177,6 +229,8 @@ components:
     Folder:
       type: object
       description: Data representing a directory inside the bookshelf.
+      example:
+        $ref: '#/components/examples/Folder'
       properties:
         id:
           type: integer
@@ -242,6 +296,41 @@ components:
       items:
         $ref: '#/components/schemas/Shelf'
 paths:
+  /ebooks/shelf/{shelfId}:
+    summary: Base shelf directory
+    description: An endpoint to interact with the base directory of the shelf.
+    parameters:
+      - $ref: '#/components/parameters/ShelfID'
+    get:
+      tags:
+      - ebook
+      - read
+      summary: Retrieve base directory of a shelf.
+      description: Retrieve all files and folders, at the base directory, of a shelf.
+      operationId: retrieve-ebooks-base
+      responses:
+        '200':
+          $ref: '#/components/responses/Ebooks'
+        '404':
+          $ref: '#/components/responses/404'
+  /ebooks/shelf/{shelfId}/folder/{folderId}:
+    summary: Shelf directory
+    description: An endpoint to interact with folders, beyond the base directory, of a shelf.
+    parameters:
+      - $ref: '#/components/parameters/ShelfID'
+      - $ref: '#/components/parameters/FolderID'
+    get:
+      tags:
+      - ebook
+      - read
+      summary: Retrieve items in a folder.
+      description: Traverse inside a folder, and retrieve files (ebooks) and folders.
+      operationId: retrieve-ebooks-folder
+      responses:
+        '200':
+          $ref: '#/components/responses/Ebooks'
+        '404':
+          $ref: '#/components/responses/404'
   /shelves:
     summary: Shelves Endpoints
     description: An endpoint to interact with multiple shelves or create a new shelf.
@@ -333,6 +422,8 @@ tags:
   description: Create operations
 - name: delete
   description: Delete operations
+- name: ebook
+  description: eBook operations
 - name: read
   description: Read operations
 - name: shelf
