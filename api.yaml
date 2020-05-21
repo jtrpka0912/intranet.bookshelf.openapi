@@ -275,6 +275,7 @@ components:
         name:
           type: string
           description: Name of the shelf or collection.
+          minLength: 3
         root:
           type: string
           description: The starting path of the collection.
