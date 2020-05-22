@@ -278,6 +278,7 @@ components:
           minLength: 3
         root:
           type: string
+          format: path
           description: The starting path of the collection.
         showDirectories:
           type: boolean
@@ -287,6 +288,14 @@ components:
           type: boolean
           description: Allow a single ebook to be a directory with multiple file types inside.
           default: false
+        createdAt:
+          type: string
+          format: datetime
+          description: Timestamp when the object was created.
+        updatedAt:
+          type: string
+          format: datetime
+          description: Timestamp when the object was modified the last time.
       required:
         - id
         - name
