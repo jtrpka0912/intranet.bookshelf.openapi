@@ -279,7 +279,7 @@ components:
         root:
           type: string
           format: path
-          description: The starting path of the collection.
+          description: The starting, absolute path of the collection.
         showDirectories:
           type: boolean
           description: Allow the explorer to show all files (false) at once or separated in their respective directories (true).
