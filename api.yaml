@@ -209,7 +209,7 @@ components:
           description: Name of the ebook.
         path:
           type: string
-          description: Path to the ebook in the NAS.
+          description: A path, prepended by a Shelf's root path, to a file in a server.
         cover:
           type: string
           description: Path to the image, created in backend, of the ebook.
@@ -241,7 +241,7 @@ components:
           description: Name of the directory; for example, a publisher or genre name.
         path:
           type: string
-          description: Path to the directory in the NAS.
+          description: A path, prepended by a Shelf's root path, to a directory in a server.
       required:
         - id
         - name
