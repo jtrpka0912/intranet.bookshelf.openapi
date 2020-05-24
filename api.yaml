@@ -408,7 +408,9 @@ paths:
         '200':
           description: Edited an existing bookshelf.
           content:
-            'application/json': {}
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Shelf'
         '400':
           $ref: '#/components/responses/400'
         '404':
