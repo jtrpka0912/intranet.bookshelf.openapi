@@ -275,8 +275,10 @@ components:
         name:
           type: string
           description: Name of the shelf or collection.
+          minLength: 3
         root:
           type: string
+          format: path
           description: The starting path of the collection.
         showDirectories:
           type: boolean
@@ -286,6 +288,14 @@ components:
           type: boolean
           description: Allow a single ebook to be a directory with multiple file types inside.
           default: false
+        createdAt:
+          type: string
+          format: datetime
+          description: Timestamp when the object was created.
+        updatedAt:
+          type: string
+          format: datetime
+          description: Timestamp when the object was modified the last time.
       required:
         - id
         - name
@@ -398,7 +408,9 @@ paths:
         '200':
           description: Edited an existing bookshelf.
           content:
-            'application/json': {}
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Shelf'
         '400':
           $ref: '#/components/responses/400'
         '404':
