@@ -207,6 +207,7 @@ components:
         name:
           type: string
           description: Name of the ebook.
+          minLength: 3
         path:
           type: string
           description: A path, prepended by a Shelf's root path, to a file in a server.
@@ -216,6 +217,14 @@ components:
         didRead:
           type: boolean
           description: Did the user read the ebook.
+        createdAt:
+          type: string
+          format: datetime
+          description: Timestamp when the object was created.
+        updatedAt:
+          type: string
+          format: datetime
+          description: Timestamp when the object was modified the last time.
       required:
         - id
         - type
@@ -242,6 +251,14 @@ components:
         path:
           type: string
           description: A path, prepended by a Shelf's root path, to a directory in a server.
+        createdAt:
+          type: string
+          format: datetime
+          description: Timestamp when the object was created.
+        updatedAt:
+          type: string
+          format: datetime
+          description: Timestamp when the object was modified the last time.
       required:
         - id
         - name
