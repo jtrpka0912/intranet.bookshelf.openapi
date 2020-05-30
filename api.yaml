@@ -248,6 +248,7 @@ components:
         name:
           type: string
           description: Name of the directory; for example, a publisher or genre name.
+          minLength: 3
         path:
           type: string
           description: A path, prepended by a Shelf's root path, to a directory in a server.
