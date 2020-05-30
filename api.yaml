@@ -425,7 +425,7 @@ paths:
       description: Remove a single bookshelf.
       operationId: remove-shelf
       responses:
-        '200':
+        '204':
           description: Removed a single bookshelf.
           content:
             'application/json': {}
