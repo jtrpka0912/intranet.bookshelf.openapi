@@ -371,7 +371,9 @@ paths:
         '200':
           description: Created a new bookshelf.
           content:
-            'application/json': {}
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Shelf'
         '400':
           $ref: '#/components/responses/400'
   /shelves/{shelfId}:
@@ -423,7 +425,7 @@ paths:
       description: Remove a single bookshelf.
       operationId: remove-shelf
       responses:
-        '200':
+        '204':
           description: Removed a single bookshelf.
           content:
             'application/json': {}
