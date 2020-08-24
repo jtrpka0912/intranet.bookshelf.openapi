@@ -471,7 +471,7 @@ paths:
       - $ref: '#/components/parameters/ShelfID'
     get:
       tags:
-        - ebook
+        - shelf
         - read
       summary: Refresh the shelf.
       description: Refresh the shelf by scanning files in the server and updating the database.
