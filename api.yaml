@@ -27,6 +27,8 @@ components:
       summary: eBooks Response Example
       description: A simple example of an eBook response.
       value:
+        shelf:
+        - $ref: '#/components/examples/Shelf'
         breadcrumbs:
         - $ref: '#/components/examples/Folder'
         directories:
@@ -164,6 +166,10 @@ components:
       example:
         $ref: '#/components/examples/EbooksResponse'
       properties:
+        shelf:
+          description: The root directory that starts the shelf.
+          allOf:
+          - $ref: '#/components/schemas/Shelf'
         breadcrumbs:
           description: All of the previous directories that led to this directory.
           allOf:
