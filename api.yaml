@@ -6,7 +6,7 @@ info:
     name: "J. Trpka"
     url: "https://www.github.com/jtrpka0912"
     email: "jtrpka0912@gmail.com"
-  version: "1.2.0"
+  version: "1.2.1"
 servers:
   - url: "http://localhost:3001/api/v1"
     description: "Development Server"
@@ -338,14 +338,14 @@ components:
       items:
         $ref: '#/components/schemas/Shelf'
 paths:
-  /ebooks/shelf/{shelfId}:
+  /contents/shelf/{shelfId}:
     summary: Base shelf directory
     description: An endpoint to interact with the base directory of the shelf.
     parameters:
       - $ref: '#/components/parameters/ShelfID'
     get:
       tags:
-      - ebook
+      - contents
       - read
       summary: Retrieve base directory of a shelf.
       description: Retrieve all files and folders, at the base directory, of a shelf.
@@ -355,7 +355,7 @@ paths:
           $ref: '#/components/responses/Ebooks'
         '404':
           $ref: '#/components/responses/404'
-  /ebooks/shelf/{shelfId}/folder/{folderId}:
+  /contents/shelf/{shelfId}/folder/{folderId}:
     summary: Shelf directory
     description: An endpoint to interact with folders, beyond the base directory, of a shelf.
     parameters:
@@ -363,7 +363,7 @@ paths:
       - $ref: '#/components/parameters/FolderID'
     get:
       tags:
-      - ebook
+      - contents
       - read
       summary: Retrieve items in a folder.
       description: Traverse inside a folder, and retrieve files (ebooks) and folders.
@@ -484,12 +484,12 @@ paths:
           $ref: '#/components/responses/500'
           
 tags:
+- name: contents
+  description: Content operations
 - name: create
   description: Create operations
 - name: delete
   description: Delete operations
-- name: ebook
-  description: eBook operations
 - name: read
   description: Read operations
 - name: shelf
