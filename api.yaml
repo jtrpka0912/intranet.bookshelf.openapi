@@ -423,7 +423,6 @@ paths:
                 $ref: '#/components/schemas/File'
         '404':
           $ref: '#/components/responses/404'
-
   /shelves:
     summary: Shelves Endpoints
     description: An endpoint to interact with multiple shelves or create a new shelf.
