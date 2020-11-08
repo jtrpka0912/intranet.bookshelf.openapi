@@ -23,6 +23,11 @@ components:
         cover: /path/to/images/cover/journey-to-the-west.jpg
         didRead: false
         author: Unknown
+    DidRead:
+      summary: Did Read Example
+      description: An example for a did read request
+      value:
+        didRead: true
     EbooksResponse:
       summary: eBooks Response Example
       description: A simple example of an eBook response.
@@ -86,10 +91,9 @@ components:
       description: Primary key for a shelf.
       required: true
       schema:
-        type: integer
-        minimum: 1
+        type: string
       example:
-        value: 1
+        value: 'abcdefghijklmnopqrstuvwxyz'
       style: simple
     FolderID:
       name: folderId
@@ -97,11 +101,19 @@ components:
       description: Primary key of a folder.
       required: true
       schema:
-        type: integer
-        minimum: 1
+        type: string
       example:
-        value: 1
+        value: 'abcdefghijklmnopqrstuvwxyz'
       style: simple
+    FileID:
+      name: fileId
+      in: path
+      description: Primary key of a file.
+      required: true
+      schema:
+        type: string
+      example:
+        value: 'abcdefghijklmnopqrstuvwxyz'
   requestBodies:
     CreateShelf:
       description: The fields needed to create a bookshelf.
@@ -112,6 +124,15 @@ components:
             $ref: '#/components/schemas/Shelf'
           example:
             $ref: '#/components/examples/Shelf'
+    DidRead:
+      description: Change the status of a file if it was read or not.
+      required: true
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/DidRead'
+          example:
+            $ref: '#/components/examples/DidRead'
     UpdateShelf:
       description: The fields to update a bookshelf.
       required: true
@@ -120,7 +141,7 @@ components:
           schema:
             $ref: '#/components/schemas/Shelf'
           example:
-            $ref: '#/components/schemas/Shelf'
+            $ref: '#/components/examples/Shelf'
   responses:
     Ebooks:
       description: A typical response from retrieving files and folders from a shelf.
@@ -160,6 +181,14 @@ components:
           author:
             type: string
             description: The author of the ebook book.
+    DidRead:
+      type: object
+      description: The request body for toggling the did read of a file.
+      properties:
+        didRead:
+          description: Either the book was read (true) or not (false).
+          type: boolean
+          example: true
     EbooksResponse:
       type: object
       description: Response model with ebooks and directories.
@@ -349,7 +378,7 @@ paths:
       - read
       summary: Retrieve base directory of a shelf.
       description: Retrieve all files and folders, at the base directory, of a shelf.
-      operationId: retrieve-ebooks-base
+      operationId: retrieve-contents-base
       responses:
         '200':
           $ref: '#/components/responses/Ebooks'
@@ -366,13 +395,35 @@ paths:
       - contents
       - read
       summary: Retrieve items in a folder.
-      description: Traverse inside a folder, and retrieve files (ebooks) and folders.
-      operationId: retrieve-ebooks-folder
+      description: Traverse inside a folder, and retrieve files and folders.
+      operationId: retrieve-contents-folder
       responses:
         '200':
           $ref: '#/components/responses/Ebooks'
         '404':
           $ref: '#/components/responses/404'
+  /ebooks/{fileId}/did-read:
+    summary: Toggle the did read flag for a files.
+    description: An endpoint to toggle if a file was read or not.
+    parameters:
+      - $ref: '#/components/parameters/FileID'
+    patch:
+      tags:
+      - ebooks
+      - update
+      operationId: update-ebook-didread
+      requestBody:
+        $ref: '#/components/requestBodies/DidRead'
+      responses:
+        '200':
+          description: File's "did read" was toggled
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/File'
+        '404':
+          $ref: '#/components/responses/404'
+
   /shelves:
     summary: Shelves Endpoints
     description: An endpoint to interact with multiple shelves or create a new shelf.
