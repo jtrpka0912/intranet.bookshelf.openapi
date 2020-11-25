@@ -6,7 +6,7 @@ info:
     name: "J. Trpka"
     url: "https://www.github.com/jtrpka0912"
     email: "jtrpka0912@gmail.com"
-  version: "1.3.0"
+  version: "1.4.0"
 servers:
   - url: "http://localhost:3001/api/v1"
     description: "Development Server"
@@ -16,10 +16,11 @@ components:
       summary: eBook Book Example
       description: A simple example of an ebook Book example.
       value:
-        id: 4
+        id: abc123
         type: book
         name: Journey to the West
         path: /path/to/ebook/journey-to-the-west.pdf
+        download: /path/to/ebook/journey-to-the-west.pdf
         cover: /path/to/images/cover/journey-to-the-west.jpg
         didRead: false
         author: Unknown
@@ -51,24 +52,25 @@ components:
       summary: eBook Example
       description: A simple example of an ebook example.
       value:
-        id: 1
+        id: abc123
         type: comicbook
         name: The Boys
         path: /path/to/ebook/the-boys/issues/001.cbz
+        download: /path/to/ebook/the-boys/issues/001.cbz
         cover: /path/to/images/cover/the-boys/issues/001.cbz
         didRead: false
     Folder:
       summary: Folder Example
       description: A simple example of a directory in a shelf.
       value:
-        id: 5
+        id: abc123
         name: O Reilly
         path: /path/to/books/oreilly
     Magazine:
       summary: eBook Magazine Example
       description: A simple example of an ebook Magazine example.
       value:
-        id: 19
+        id: abc123
         type: magazine
         name: Magpi
         path: /path/to/magazines/magpi/issue014.pdf
@@ -79,7 +81,7 @@ components:
       summary: Bookshelf Example
       description: An example of a simple bookshelf.
       value:
-        id: 2
+        id: abc123
         name: Bookshelf of Books
         root: /path/to/root
         showDirectories: true
@@ -93,7 +95,7 @@ components:
       schema:
         type: string
       example:
-        value: 'abcdefghijklmnopqrstuvwxyz'
+        value: abc123
       style: simple
     FolderID:
       name: folderId
@@ -103,7 +105,7 @@ components:
       schema:
         type: string
       example:
-        value: 'abcdefghijklmnopqrstuvwxyz'
+        value: abc123
       style: simple
     FileID:
       name: fileId
@@ -113,7 +115,7 @@ components:
       schema:
         type: string
       example:
-        value: 'abcdefghijklmnopqrstuvwxyz'
+        value: abc123
   requestBodies:
     CreateShelf:
       description: The fields needed to create a bookshelf.
@@ -237,9 +239,8 @@ components:
         $ref: '#/components/examples/File'
       properties:
         id:
-          type: integer
+          type: string
           description: The primary key.
-          minimum: 1
         type:
           type: string
           description: Is this a book, magazine, or comic book?
@@ -254,6 +255,9 @@ components:
         path:
           type: string
           description: A path, prepended by a Shelf's root path, to a file in a server.
+        download:
+          type: string
+          description: An updated path that is meant for downloading the file.
         cover:
           type: string
           description: Path to the image, created in backend, of the ebook.
@@ -273,6 +277,7 @@ components:
         - type
         - name
         - path
+        - download
     Files:
       type: array
       description: An array of ebook files.
@@ -285,9 +290,8 @@ components:
         $ref: '#/components/examples/Folder'
       properties:
         id:
-          type: integer
+          type: string
           description: The primary key.
-          minimum: 1
         name:
           type: string
           description: Name of the directory; for example, a publisher or genre name.
@@ -330,9 +334,8 @@ components:
         $ref: '#/components/examples/Shelf'
       properties:
         id:
-          type: integer
+          type: string
           description: The primary key.
-          minimum: 1
         name:
           type: string
           description: Name of the shelf or collection.
